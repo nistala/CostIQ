@@ -40,7 +40,7 @@ const UploadDetailsDialog = ({ open, onClose }) => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       console.log(acceptedFiles, "line 35");
-      
+
       setFormData({ ...formData, file: acceptedFiles[0] });
     }
   });
@@ -69,19 +69,19 @@ const UploadDetailsDialog = ({ open, onClose }) => {
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-      <DialogTitle>
+      <DialogTitle style={{color:"#1E3A8A", fontWeight:"bold"}}>
         Upload Details
         <IconButton
           aria-label="close"
           onClick={onClose}
-          sx={{ position: 'absolute', right: 8, top: 8 }}
+          sx={{ position: 'absolute', right: 8, top: 8 ,color:"#1E3A8A"}}
         >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <TextField
               label="Study Name"
               name="studyName"
@@ -89,7 +89,30 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               onChange={handleChange}
               fullWidth
               variant="outlined"
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             />
+
           </Grid>
 
           <Grid item xs={12} sm={6}>
@@ -102,6 +125,28 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               fullWidth
               error={!!errors.benchmarkingType}
               helperText={errors.benchmarkingType}
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             >
               {benchmarkingTypes.map((type) => (
                 <MenuItem key={type} value={type}>{type}</MenuItem>
@@ -117,6 +162,28 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               onChange={handleChange}
               fullWidth
               variant="outlined"
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             />
           </Grid>
 
@@ -130,6 +197,28 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               fullWidth
               error={!!errors.fordVehicle}
               helperText={errors.fordVehicle}
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             >
               {fordVehicles.map((vehicle) => (
                 <MenuItem key={vehicle} value={vehicle}>{vehicle}</MenuItem>
@@ -145,6 +234,28 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               value={formData.modelYear}
               onChange={handleChange}
               fullWidth
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             >
               {modelYears.map((year) => (
                 <MenuItem key={year} value={year}>{year}</MenuItem>
@@ -160,6 +271,28 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               onChange={handleChange}
               fullWidth
               variant="outlined"
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             />
           </Grid>
 
@@ -171,10 +304,32 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               onChange={handleChange}
               fullWidth
               variant="outlined"
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <TextField
               label="Commodity Name"
               name="commodityName"
@@ -182,11 +337,33 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               onChange={handleChange}
               fullWidth
               variant="outlined"
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             />
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="subtitle2" gutterBottom>File Upload</Typography>
+            <Typography variant="subtitle2" gutterBottom style={{color:"#1E3A8A", fontWeight:"bold"}}>File Upload</Typography>
             <Paper
               variant="outlined"
               sx={{
@@ -197,7 +374,7 @@ const UploadDetailsDialog = ({ open, onClose }) => {
                 height: 120,
                 borderRadius: 2,
                 backgroundColor: '#f9f9f9',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
               {...getRootProps()}
             >
@@ -221,6 +398,28 @@ const UploadDetailsDialog = ({ open, onClose }) => {
               variant="outlined"
               multiline
               rows={3}
+              sx={{
+                backgroundColor: '#fff',
+                borderRadius: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  fontSize: '14px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#1E3A8A',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#90caf9',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#1E3A8A',
+                }
+              }}
             />
           </Grid>
         </Grid>

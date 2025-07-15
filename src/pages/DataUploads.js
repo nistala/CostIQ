@@ -127,10 +127,10 @@ export default function DataUploads() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h5" fontWeight="bold" mb={1}>
+      <Typography variant="h4" fontWeight="bold" mb={1} style={{color:"#1E3A8A"}}>
         Data Uploads
       </Typography>
-      <Button variant="contained" sx={{ mb: 3 }} onClick={() => setOpen(true)}>
+      <Button variant="contained" sx={{ mb: 3 }} onClick={() => setOpen(true)} style={{background:"#1E3A8A"}}>
         Add a new files
       </Button>
       <UploadModal
@@ -143,19 +143,19 @@ export default function DataUploads() {
       {!loading && (
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Study Name ⬍</TableCell>
-                <TableCell>
-                  <FilterListIcon fontSize="small" /> File Name
+            <TableHead >
+              <TableRow >
+                <TableCell style={{color:"#1E3A8A", fontWeight:"bold"}}>Study Name ⬍</TableCell>
+                {/* <TableCell> */}
+                  <TableCell fontSize="small" style={{color:"#1E3A8A", fontWeight:"bold"}}> File Name
                 </TableCell>
-                <TableCell>
-                  <FilterListIcon fontSize="small" /> Upload Time
+                {/* <TableCell> */}
+                  <TableCell fontSize="small" style={{color:"#1E3A8A", fontWeight:"bold"}}> Upload Time
                 </TableCell>
-                <TableCell>
-                  <FilterListIcon fontSize="small" /> Status
+                {/* <TableCell> */}
+                  <TableCell fontSize="small" style={{color:"#1E3A8A", fontWeight:"bold"}}> Status
                 </TableCell>
-                <TableCell align="center">Actions</TableCell>
+                <TableCell align="center" style={{color:"#1E3A8A", fontWeight:"bold"}}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
