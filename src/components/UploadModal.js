@@ -1,95 +1,236 @@
 import React, { useState } from 'react';
 import {
-  Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,
-  Grid, TextField, MenuItem, Typography
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Button,
+  Grid,
+  MenuItem,
+  Typography,
+  Box,
+  IconButton,
+  Paper
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useDropzone } from 'react-dropzone';
 
-const clusterGroups = ['Group A','Group B'];
-const modelYears = ['2022','2023','2024'];
-const benchmarkingTypes = ['Type A','Type B'];
-const fordVehicles = ['F-150','Mustang'];
+const benchmarkingTypes = ['Ford Vehicle', 'Non-Ford Vehicle'];
+const fordVehicles = ['F-150', 'Mustang', 'Escape'];
+const modelYears = ['2022', '2023', '2024'];
 
-export default function UploadModal({ open, onClose, onSubmit }) {
-  const [form, setForm] = useState({
-    studyName:'',clusterGroup:'',modelYear:'',benchmarkingType:'',
-    fordVehicle:'',competitorMake:'',competitorModel:'',commodityName:'',description:'',
+const UploadDetailsDialog = ({ open, onClose }) => {
+  const [formData, setFormData] = useState({
+    studyName: '',
+    benchmarkingType: '',
+    vhmGroup: '',
+    fordVehicle: '',
+    modelYear: '',
+    competitorMake: '',
+    competitorModel: '',
+    commodityName: '',
+    description: '',
+    file: null
   });
-  const [file, setFile] = useState(null);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    multiple:false,onDrop:accepted => setFile(accepted[0])
+
+  const [errors, setErrors] = useState({});
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: (acceptedFiles) => {
+      console.log(acceptedFiles, "line 35");
+      
+      setFormData({ ...formData, file: acceptedFiles[0] });
+    }
   });
-  const handleChange = e => setForm({...form,[e.target.name]:e.target.value});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const validate = () => {
+    let tempErrors = {};
+    if (!formData.benchmarkingType) tempErrors.benchmarkingType = 'Required';
+    if (!formData.fordVehicle) tempErrors.fordVehicle = 'Required';
+    return tempErrors;
+  };
+
   const handleSubmit = () => {
-    const data = new FormData();
-    Object.entries(form).forEach(([k,v]) => data.append(k,v));
-    if(file) data.append('file',file);
-    onSubmit(data);
-    onClose();
-    setForm({studyName:'',clusterGroup:'',modelYear:'',benchmarkingType:'',
-      fordVehicle:'',competitorMake:'',competitorModel:'',commodityName:'',description:''});
-    setFile(null);
+    const tempErrors = validate();
+    if (Object.keys(tempErrors).length > 0) {
+      setErrors(tempErrors);
+    } else {
+      console.log('Form Submitted', formData);
+      onClose();
+    }
   };
-  const handleClear = () => {
-    setForm({studyName:'',clusterGroup:'',modelYear:'',benchmarkingType:'',
-      fordVehicle:'',competitorMake:'',competitorModel:'',commodityName:'',description:''});
-    setFile(null);
-  };
+
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>Upload Details</DialogTitle>
-      <DialogContent>
-        <Box component="form" sx={{ mt:2 }}>
-          <Grid container spacing={2}>
-            {[
-              {name:'studyName',label:'Study Name',select:false,options:[]},
-              {name:'benchmarkingType',label:'Benchmarking Type',select:true,options:benchmarkingTypes},
-              {name:'clusterGroup',label:'Cluster Group',select:true,options:clusterGroups},
-              {name:'fordVehicle',label:'Ford Vehicle',select:true,options:fordVehicles},
-              {name:'modelYear',label:'Model Year',select:true,options:modelYears},
-              {name:'competitorMake',label:'Competitor Make',select:false,options:[]},
-              {name:'competitorModel',label:'Competitor Model',select:false,options:[]},
-              {name:'commodityName',label:'Commodity Name',select:false,options:[]},
-            ].map((field,i) => (
-              <Grid item xs={6} key={i}>
-                <TextField
-                  fullWidth
-                  name={field.name}
-                  label={field.label}
-                  value={form[field.name]}
-                  onChange={handleChange}
-                  select={field.select}
-                >
-                  {field.select && field.options.map(opt => <MenuItem key={opt} value={opt}>{opt}</MenuItem>)}
-                </TextField>
-              </Grid>
-            ))}
-            <Grid item xs={12}>
-              <Box {...getRootProps()} sx={{
-                border:'2px dashed #1976d2',p:2,textAlign:'center',cursor:'pointer',
-                backgroundColor:isDragActive?'#e3f2fd':'#f9f9f9'
-              }}>
-                <input {...getInputProps()} />
-                <Typography color="primary">
-                  {file?file.name:'+ Drag and drop files here or click to select file.'}
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
+      <DialogTitle>
+        Upload Details
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{ position: 'absolute', right: 8, top: 8 }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent dividers>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Study Name"
+              name="studyName"
+              value={formData.studyName}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              select
+              label="*Benchmarking Type"
+              name="benchmarkingType"
+              value={formData.benchmarkingType}
+              onChange={handleChange}
+              fullWidth
+              error={!!errors.benchmarkingType}
+              helperText={errors.benchmarkingType}
+            >
+              {benchmarkingTypes.map((type) => (
+                <MenuItem key={type} value={type}>{type}</MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="VHM/Cluster Group/VESC"
+              name="vhmGroup"
+              value={formData.vhmGroup}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              select
+              label="*Ford Vehicle"
+              name="fordVehicle"
+              value={formData.fordVehicle}
+              onChange={handleChange}
+              fullWidth
+              error={!!errors.fordVehicle}
+              helperText={errors.fordVehicle}
+            >
+              {fordVehicles.map((vehicle) => (
+                <MenuItem key={vehicle} value={vehicle}>{vehicle}</MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              select
+              label="Model Year"
+              name="modelYear"
+              value={formData.modelYear}
+              onChange={handleChange}
+              fullWidth
+            >
+              {modelYears.map((year) => (
+                <MenuItem key={year} value={year}>{year}</MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Competitor Make"
+              name="competitorMake"
+              value={formData.competitorMake}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Competitor Model"
+              name="competitorModel"
+              value={formData.competitorModel}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Commodity Name"
+              name="commodityName"
+              value={formData.commodityName}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography variant="subtitle2" gutterBottom>File Upload</Typography>
+            <Paper
+              variant="outlined"
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: '2px dashed #c5c5c5',
+                height: 120,
+                borderRadius: 2,
+                backgroundColor: '#f9f9f9',
+                cursor: 'pointer'
+              }}
+              {...getRootProps()}
+            >
+              <input {...getInputProps()} />
+              <Box display="flex" flexDirection="column" alignItems="center">
+                <CloudUploadIcon fontSize="large" sx={{ color: '#90a4ae' }} />
+                <Typography variant="caption" color="text.secondary">
+                  {formData.file ? formData.file.name : 'Drag and drop or click to upload file'}
                 </Typography>
               </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth multiline rows={3}
-                name="description" label="Description"
-                value={form.description} onChange={handleChange}
-              />
-            </Grid>
+            </Paper>
           </Grid>
-        </Box>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+              multiline
+              rows={3}
+            />
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleClear}>Clear</Button>
-        <Button variant="contained" onClick={handleSubmit}>Submit Files</Button>
+        <Button onClick={onClose} color="secondary">Cancel</Button>
+        <Button onClick={handleSubmit} variant="contained" color="primary">Submit</Button>
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+export default UploadDetailsDialog;
