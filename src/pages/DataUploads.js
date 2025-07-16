@@ -130,7 +130,7 @@ export default function DataUploads() {
       <Typography variant="h4" fontWeight="bold" mb={1} style={{color:"#1E3A8A"}}>
         Data Uploads
       </Typography>
-      <Button variant="contained" sx={{ mb: 3 }} onClick={() => setOpen(true)} style={{background:"#1E3A8A"}}>
+      <Button variant="contained" sx={{ mb: 3, textTransform: 'none'}} onClick={() => setOpen(true)} style={{background:"#1E3A8A"}}>
         Add a new files
       </Button>
       <UploadModal
