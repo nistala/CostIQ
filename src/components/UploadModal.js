@@ -57,15 +57,35 @@ const UploadDetailsDialog = ({ open, onClose }) => {
     return tempErrors;
   };
 
-  const handleSubmit = () => {
-    const tempErrors = validate();
-    if (Object.keys(tempErrors).length > 0) {
-      setErrors(tempErrors);
-    } else {
-      console.log('Form Submitted', formData);
-      onClose();
+const handleSubmit = () => {
+  const tempErrors = validate();
+  if (Object.keys(tempErrors).length > 0) {
+    setErrors(tempErrors);
+  } else {
+    const data = new FormData();
+    data.append('studyName', formData.studyName);
+    data.append('benchmarkingType', formData.benchmarkingType);
+    data.append('vhmGroup', formData.vhmGroup);
+    data.append('fordVehicle', formData.fordVehicle);
+    data.append('modelYear', formData.modelYear);
+    data.append('competitorMake', formData.competitorMake);
+    data.append('competitorModel', formData.competitorModel);
+    data.append('commodityName', formData.commodityName);
+    data.append('description', formData.description);
+    if (formData.file) {
+      data.append('file', formData.file);
     }
-  };
+
+    console.log('FormData submitted:', Object.fromEntries(data.entries()));
+
+    // axios.post('/your/api/endpoint', data)
+    //   .then(response => console.log(response))
+    //   .catch(error => console.error(error));
+
+    onClose();
+  }
+};
+
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
@@ -371,7 +391,7 @@ const UploadDetailsDialog = ({ open, onClose }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 border: '2px dashed #c5c5c5',
-                height: 120,
+                height: 70,
                 borderRadius: 2,
                 backgroundColor: '#f9f9f9',
                 cursor: 'pointer',
@@ -426,7 +446,7 @@ const UploadDetailsDialog = ({ open, onClose }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">Cancel</Button>
-        <Button onClick={handleSubmit} variant="contained" color="primary">Submit</Button>
+        <Button onClick={handleSubmit} variant="contained" style={{background:"#1E3A8A"}}>Submit</Button>
       </DialogActions>
     </Dialog>
   );
